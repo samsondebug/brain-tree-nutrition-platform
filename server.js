@@ -168,6 +168,32 @@ async function createSampleData() {
             }
         }
 
+        // Create sample integrations
+        const integrationCount = await Integration.countDocuments();
+        if (integrationCount === 0) {
+            console.log('🔗 Creating sample integrations...');
+            const sampleIntegrations = [
+                {
+                    platform: 'shopify',
+                    apiKey: 'sample_shopify_key',
+                    storeUrl: 'https://your-store.myshopify.com',
+                    isActive: true,
+                    lastSync: new Date()
+                },
+                {
+                    platform: 'stripe',
+                    apiKey: 'sample_stripe_key',
+                    isActive: false,
+                    lastSync: null
+                }
+            ];
+
+            for (const integration of sampleIntegrations) {
+                await Integration.create(integration);
+            }
+            console.log('✅ Sample integrations created');
+        }
+
     } catch (error) {
         console.error('❌ Error creating sample data:', error);
     }
@@ -411,7 +437,21 @@ app.get('/api/orders', authenticateToken, async (req, res) => {
 
 app.post('/api/orders', authenticateToken, async (req, res) => {
     try {
-        const order = new Order(req.body);
+        const { customerEmail, total, status } = req.body;
+        
+        // Find customer by email
+        const customer = await Customer.findOne({ email: customerEmail });
+        if (!customer) {
+            return res.status(400).json({ error: 'Customer not found' });
+        }
+        
+        const order = new Order({
+            customerId: customer._id,
+            total: total,
+            status: status || 'pending',
+            products: [] // Empty for now, can be enhanced later
+        });
+        
         await order.save();
         res.json(order);
     } catch (error) {
