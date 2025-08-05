@@ -222,30 +222,57 @@
 
         // Tab Navigation
         function showTab(tabName, clickedElement) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            console.log('Tab clicked:', tabName);
             
-            document.getElementById(tabName).classList.add('active');
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+                console.log('Removing active from:', tab.id);
+            });
+            
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+                console.log('Removing active from button:', btn.textContent);
+            });
+            
+            // Add active class to selected tab and content
+            const targetTab = document.getElementById(tabName);
+            if (targetTab) {
+                targetTab.classList.add('active');
+                console.log('Added active to tab:', tabName);
+            } else {
+                console.error('Tab not found:', tabName);
+            }
+            
             if (clickedElement) {
                 clickedElement.classList.add('active');
+                console.log('Added active to button:', clickedElement.textContent);
             }
 
+            // Load content based on tab
             switch(tabName) {
                 case 'dashboard':
+                    console.log('Loading dashboard...');
                     loadDashboard();
                     break;
                 case 'products':
+                    console.log('Loading products...');
                     loadProducts();
                     break;
                 case 'customers':
+                    console.log('Loading customers...');
                     loadCustomers();
                     break;
                 case 'orders':
+                    console.log('Loading orders...');
                     loadOrders();
                     break;
                 case 'integrations':
+                    console.log('Loading integrations...');
                     loadIntegrations();
                     break;
+                default:
+                    console.error('Unknown tab:', tabName);
             }
         }
 
@@ -385,6 +412,23 @@
             } catch (error) {
                 console.error('Error loading integrations:', error);
             }
+        }
+
+        // Modal Functions (placeholder for now)
+        function showAddProductModal() {
+            alert('Add Product feature coming soon! For now, you can view your products.');
+        }
+
+        function showAddCustomerModal() {
+            alert('Add Customer feature coming soon! For now, you can view your customers.');
+        }
+
+        function showAddOrderModal() {
+            alert('Add Order feature coming soon! For now, you can view your orders.');
+        }
+
+        function showAddIntegrationModal() {
+            alert('Add Integration feature coming soon! For now, you can view your integrations.');
         }
 
         // Initialize
