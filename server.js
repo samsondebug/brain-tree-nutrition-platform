@@ -40,162 +40,13 @@ async function createAdminUser() {
     }
 }
 
-// Create sample data if database is empty
-async function createSampleData() {
+// Initialize clean database
+async function initializeDatabase() {
     try {
-        // Check if we have any data
-        const productCount = await Product.countDocuments();
-        const customerCount = await Customer.countDocuments();
-        const orderCount = await Order.countDocuments();
-
-        if (productCount === 0) {
-            console.log('📦 Creating sample products...');
-            const sampleProducts = [
-                {
-                    name: 'THINK Cognitive Enhancement',
-                    description: 'Advanced nootropic formula for focus and memory',
-                    price: 49.99,
-                    cost: 25.00,
-                    stock: 150,
-                    category: 'Nootropics',
-                    sku: 'THINK-001'
-                },
-                {
-                    name: 'Brain Water Hydration',
-                    description: 'Electrolyte-enhanced water with cognitive boosters',
-                    price: 29.99,
-                    cost: 15.00,
-                    stock: 300,
-                    category: 'Hydration',
-                    sku: 'BW-001'
-                },
-                {
-                    name: 'Peaceful Slumber',
-                    description: 'Natural sleep aid with melatonin and magnesium',
-                    price: 39.99,
-                    cost: 20.00,
-                    stock: 75,
-                    category: 'Sleep',
-                    sku: 'PS-001'
-                },
-                {
-                    name: 'Stress Shield',
-                    description: 'Adaptogenic blend for stress management',
-                    price: 44.99,
-                    cost: 22.00,
-                    stock: 120,
-                    category: 'Stress Relief',
-                    sku: 'SS-001'
-                }
-            ];
-
-            for (const product of sampleProducts) {
-                await Product.create(product);
-            }
-            console.log('✅ Sample products created');
-        }
-
-        if (customerCount === 0) {
-            console.log('👥 Creating sample customers...');
-            const sampleCustomers = [
-                {
-                    name: 'Sarah Johnson',
-                    email: 'sarah@email.com',
-                    phone: '+1-555-0123',
-                    totalSpent: 450,
-                    orders: 3,
-                    status: 'active'
-                },
-                {
-                    name: 'Mike Chen',
-                    email: 'mike@email.com',
-                    phone: '+1-555-0124',
-                    totalSpent: 780,
-                    orders: 5,
-                    status: 'active'
-                },
-                {
-                    name: 'Emily Davis',
-                    email: 'emily@email.com',
-                    phone: '+1-555-0125',
-                    totalSpent: 320,
-                    orders: 2,
-                    status: 'active'
-                }
-            ];
-
-            for (const customer of sampleCustomers) {
-                await Customer.create(customer);
-            }
-            console.log('✅ Sample customers created');
-        }
-
-        if (orderCount === 0) {
-            console.log('🛒 Creating sample orders...');
-            const customers = await Customer.find();
-            const products = await Product.find();
-
-            if (customers.length > 0 && products.length > 0) {
-                const sampleOrders = [
-                    {
-                        customerId: customers[0]._id,
-                        products: [{
-                            productId: products[0]._id,
-                            quantity: 2,
-                            price: products[0].price
-                        }],
-                        total: products[0].price * 2,
-                        status: 'completed',
-                        paymentMethod: 'credit_card'
-                    },
-                    {
-                        customerId: customers[1]._id,
-                        products: [{
-                            productId: products[1]._id,
-                            quantity: 1,
-                            price: products[1].price
-                        }],
-                        total: products[1].price,
-                        status: 'completed',
-                        paymentMethod: 'paypal'
-                    }
-                ];
-
-                for (const order of sampleOrders) {
-                    await Order.create(order);
-                }
-                console.log('✅ Sample orders created');
-            }
-        }
-
-        // Create sample integrations
-        const integrationCount = await Integration.countDocuments();
-        if (integrationCount === 0) {
-            console.log('🔗 Creating sample integrations...');
-            const sampleIntegrations = [
-                {
-                    platform: 'shopify',
-                    apiKey: 'sample_shopify_key',
-                    storeUrl: 'https://your-store.myshopify.com',
-                    isActive: true,
-                    lastSync: new Date()
-                },
-                {
-                    platform: 'stripe',
-                    apiKey: 'sample_stripe_key',
-                    isActive: false,
-                    lastSync: null
-                }
-            ];
-
-            for (const integration of sampleIntegrations) {
-                await Integration.create(integration);
-            }
-            console.log('✅ Sample integrations created');
-        }
-
+        console.log('🚀 Initializing clean database for live business...');
+        console.log('📊 Ready for your real data!');
     } catch (error) {
-        console.error('❌ Error creating sample data:', error);
+        console.error('❌ Error initializing database:', error);
     }
 }
 
@@ -528,7 +379,7 @@ app.listen(PORT, () => {
     console.log(`📊 API available at http://localhost:${PORT}/api`);
     console.log(`🌐 Frontend available at http://localhost:${PORT}`);
     
-    // Create admin user and sample data after server starts
+    // Create admin user and initialize clean database
     createAdminUser();
-    createSampleData();
+    initializeDatabase();
 }); 
