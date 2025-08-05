@@ -1,0 +1,36 @@
+# General Rules
+- Use TypeScript exclusively for all code. No JavaScript files.
+- Follow strict typing: Always define interfaces/types for props, state, and API responses (e.g., for user progress data or KPI metrics).
+- Use functional components with React hooks. No class components.
+- Add JSDoc comments to all functions, components, and complex logic (e.g., explain how mood tracking algorithms work).
+- Avoid console.log in production code; use proper logging libraries if needed.
+- Keep functions small and single-responsibility (under 50 lines where possible).
+- Use ESLint and Prettier for formatting; fix lints automatically if Iterate on Lints is enabled.
+
+# Framework and Stack
+- Use Next.js App Router patterns for all routing and data fetching.
+- Follow Next.js best practices for Data Fetching, Rendering, and Routing from https://nextjs.org/docs.
+- Use React Server Components by default for performance in analytics dashboards.
+- For styling, use TailwindCSS exclusively. No inline styles or other CSS frameworks.
+- For database/auth, prefer Supabase or Prisma. Use server actions for mutations (e.g., updating customer engagement levels).
+- For payments/subscriptions (e.g., premium analytics), integrate Stripe with secure server-side handling.
+- For charts and visualizations (e.g., mood trends, ROI, sales performance), use Recharts. Import from 'recharts' and ensure responsive design.
+
+# App-Specific: Cognitive Health Tracking SaaS
+- Prioritize data privacy: Encrypt sensitive health data (e.g., memory/focus scores) using environment variables and secure APIs. Avoid client-side storage for PII.
+- Ensure accessibility: Follow WCAG 2.1 guidelines—add ARIA labels to charts, use semantic HTML, and test for keyboard navigation in tracking forms.
+- For real-time features (e.g., KPIs, progress updates), use React Query or SWR for caching and optimistic updates.
+- Structure components: Place dashboards in /app/dashboard, API routes in /app/api, shared utils in /lib.
+- For customer/partnership tracking: Use relational DB schemas (e.g., users, metrics, partnerships tables) with type-safe queries.
+- Optimize for SaaS: Include error boundaries around analytics components; add loading states and skeletons for metrics.
+
+# Error Handling and Optimization
+- Always include try-catch in async functions and provide fallback UI (e.g., error messages for failed metric fetches).
+- Use React.memo or useMemo for performance in data-heavy components (e.g., product analytics lists).
+- Write unit tests with Jest/React Testing Library for core features like mood calculations.
+- Reference official docs: React from https://react.dev/reference/react, Tailwind from https://tailwindcss.com/docs.
+
+# Generation Guidelines
+- When generating code, be concise but complete. Explain changes in comments.
+- If unsure, reference the codebase index or ask for clarification.
+- Favor modular code: Break large features (e.g., marketing ROI tracker) into reusable hooks/components.
