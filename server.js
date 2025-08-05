@@ -20,6 +20,26 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/brain-tre
     useUnifiedTopology: true
 });
 
+// Create admin user if it doesn't exist
+async function createAdminUser() {
+    try {
+        const existingAdmin = await User.findOne({ email: 'admin@braintree.com' });
+        if (!existingAdmin) {
+            const hashedPassword = await bcrypt.hash('admin123', 10);
+            const adminUser = new User({
+                name: 'Admin User',
+                email: 'admin@braintree.com',
+                password: hashedPassword,
+                role: 'admin'
+            });
+            await adminUser.save();
+            console.log('✅ Admin user created: admin@braintree.com / admin123');
+        }
+    } catch (error) {
+        console.error('❌ Error creating admin user:', error);
+    }
+}
+
 // Database Models
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
@@ -334,4 +354,7 @@ app.listen(PORT, () => {
     console.log(`🚀 Brain Tree Nutrition Platform running on port ${PORT}`);
     console.log(`📊 API available at http://localhost:${PORT}/api`);
     console.log(`🌐 Frontend available at http://localhost:${PORT}`);
+    
+    // Create admin user after server starts
+    createAdminUser();
 }); 
