@@ -257,3 +257,7 @@ This is now a **REAL, FUNCTIONAL BUSINESS APPLICATION** that can:
 **🎉 Congratulations! You now have a REAL, FUNCTIONAL BUSINESS APPLICATION!**
 
 This is no longer a demo - it's a production-ready business management platform that can handle real customers, real orders, and real revenue tracking. 
+## ADHD-Friendly To-Do App Example
+
+The file `ADHDToDoApp.swift` includes a minimal SwiftUI to-do list that incorporates features often recommended for ADHD support, such as clear visual cues, breaking tasks into smaller actions, and optional notifications for reminders. Copy the contents into a new SwiftUI project in Xcode to try it out.
+
